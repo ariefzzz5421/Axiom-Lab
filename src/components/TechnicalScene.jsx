@@ -2,6 +2,7 @@ import React, { Suspense, useMemo, useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, OrthographicCamera } from '@react-three/drei';
+import SentinelModel from './SentinelScene.jsx';
 
 const INK = '#dcded5';
 const GHOST = '#758078';
@@ -143,14 +144,15 @@ function Stage({ experiment, exploded, autoRotate, resetKey }) {
   const controls=useRef();
   useEffect(()=>{controls.current?.reset();},[resetKey,experiment]);
   return <>
-    <OrthographicCamera makeDefault position={[7,6.4,8]} zoom={70} near={.1} far={100}/>
+    <OrthographicCamera makeDefault position={experiment==='sentinel'?[0.5,2.1,10]:[7,6.4,8]} zoom={experiment==='sentinel'?63:70} near={.1} far={100}/>
     <ambientLight intensity={.8}/>
     <group scale={experiment==='assembly'?.93:1}>
       {experiment==='assembly' && <Assembly exploded={exploded}/>}
       {experiment==='orbit' && <OrbitRings motion={exploded} autoRotate={autoRotate}/>}
       {experiment==='signal' && <SignalGrid motion={exploded} autoRotate={autoRotate}/>}
+      {experiment==='sentinel' && <SentinelModel exploded={exploded} autoRotate={autoRotate}/>}
     </group>
-    <OrbitControls ref={controls} makeDefault enablePan={false} enableZoom={true} minZoom={40} maxZoom={105} minPolarAngle={.15} maxPolarAngle={Math.PI-.15} autoRotate={autoRotate&&experiment==='assembly'} autoRotateSpeed={.55} enableDamping dampingFactor={.075}/>
+    <OrbitControls ref={controls} makeDefault enablePan={false} enableZoom={true} minZoom={experiment==='sentinel'?34:40} maxZoom={experiment==='sentinel'?110:105} minPolarAngle={.15} maxPolarAngle={Math.PI-.15} autoRotate={autoRotate&&(experiment==='assembly'||experiment==='sentinel')} autoRotateSpeed={.55} enableDamping dampingFactor={.075}/>
   </>;
 }
 

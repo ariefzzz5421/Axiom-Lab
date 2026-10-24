@@ -2,11 +2,12 @@
 
 An experimental creative-coding laboratory for technical illustrations, interactive geometry, and motion on the web.
 
-**Live 3D, not static mockups.** The first three studies are:
+**Live 3D, not static mockups.** The laboratory currently features four studies:
 
-1. **Assembly** — Procedural mechanical plates, pin, and latch with an animated exploded view.
-2. **Orbit** — Layered orbital rings and moving bodies.
-3. **Signal** — A 25-node spatial network with interconnected edges.
+1. **Sentinel Bot** — Original procedural purple 3D eye-emblem, six independent layered assemblies, inspired by the supplied logo.
+2. **Assembly** — Procedural mechanical plates, pin, and latch with an animated exploded view.
+3. **Orbit** — Layered orbital rings and moving bodies.
+4. **Signal** — A 25-node spatial network with interconnected edges.
 
 ## Stack
 
@@ -47,3 +48,7 @@ The interactive components render in the browser through WebGL. The illustration
 Create another scene component in `TechnicalScene.jsx`, add its configuration in `EXPERIMENTS` in `App.jsx`, and add an SVG thumbnail in `BlueprintIcon`. Keep each experiment independent and make new controls explicit.
 
 MIT licensed (see `LICENSE`).
+
+### Sentinel Bot
+
+The initial view opens Sentinel Bot by default. The interactive scene is created procedurally with Three.js, not a flat logo image. The source logo is provided at `public/sentinel-logo.png` for visual comparison. Interact using drag, mouse wheel/pinch, exploded-assembly slider, auto rotate and reset.
