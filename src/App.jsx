@@ -87,7 +87,7 @@ function BlueprintIcon({type}){
 
 function App(){
   const [selected,setSelected]=useState(()=>typeof window!=='undefined' && ['assembly','orbit','signal','sentinel'].includes(window.location.hash.slice(1))?window.location.hash.slice(1):'sentinel');
-  const [explode,setExplode]=useState(.18);
+  const [explode,setExplode]=useState(selected==='sentinel'?.18:.73);
   const [autoRotate,setAutoRotate]=useState(false);
   const [resetKey,setResetKey]=useState(0);
   const [copied,setCopied]=useState(false);
