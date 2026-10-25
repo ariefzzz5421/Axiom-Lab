@@ -52,3 +52,7 @@ MIT licensed (see `LICENSE`).
 ### Sentinel Bot
 
 The initial view opens Sentinel Bot by default. The interactive scene is created procedurally with Three.js, not a flat logo image. The source logo is provided at `public/sentinel-logo.png` for visual comparison. Interact using drag, mouse wheel/pinch, exploded-assembly slider, auto rotate and reset.
+
+## Sentinel Orb Mk II
+
+The Sentinel experiment now uses a genuinely spherical procedural 3D core, curved metallic armor, orbital gyroscope rings, an illuminated forward-facing iris and six articulated exploded-view groups. The default state is largely assembled so the shape reads as a globe on mobile. No Blender assets or heavy model files are required.

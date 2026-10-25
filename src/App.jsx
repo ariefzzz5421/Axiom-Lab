@@ -6,11 +6,11 @@ const EXPERIMENTS = [
   {
     id:'sentinel', no:'01', figure:'FIG. 001 / SENTINEL', category:'IDENTITY / SYSTEM STUDIES',
     heading:['Sentinel', 'Bot.'], italic:'Bot.',
-    description:'An eye that watches the system. Your Sentinel Bot mark, reimagined as a luminous mechanical guardian — built in layers and assembled in real time.',
-    caption:'An original WebGL study of the Sentinel Bot identity. Six independent component groups form the iris, orbital ring, armor and crown.',
-    specs:[['06','ASSEMBLIES'],['01','IRIS CORE'],['360°','FREE ROTATION']],
+    description:'A spherical watchtower for your signals. The Sentinel Bot eye glows inside a mechanical globe, wrapped in curved armor and orbital gyroscope rings.',
+    caption:'Sentinel Orb Mk II — a true spherical core with rounded armor, metallic rings and a luminous iris. Assemble the globe or pull its six groups apart.',
+    specs:[['06','ASSEMBLIES'],['01','GLOBE CORE'],['360°','FREE ROTATION']],
     slider:'EXPLODED ASSEMBLY', detail:'DRAG TO ROTATE · SCROLL TO ZOOM',
-    cardText:'A guardian reimagined. Reveal its inner construction.'
+    cardText:'The eye within the orb. Explore its orbital anatomy.'
   },
   {
     id:'assembly', no:'02', figure:'FIG. 002 / ASSEMBLY', category:'STRUCTURE STUDIES',
@@ -87,7 +87,7 @@ function BlueprintIcon({type}){
 
 function App(){
   const [selected,setSelected]=useState(()=>typeof window!=='undefined' && ['assembly','orbit','signal','sentinel'].includes(window.location.hash.slice(1))?window.location.hash.slice(1):'sentinel');
-  const [explode,setExplode]=useState(.73);
+  const [explode,setExplode]=useState(.18);
   const [autoRotate,setAutoRotate]=useState(false);
   const [resetKey,setResetKey]=useState(0);
   const [copied,setCopied]=useState(false);
@@ -96,7 +96,7 @@ function App(){
   const index=EXPERIMENTS.findIndex(e=>e.id===selected);
 
   function choose(id,scroll=false){
-    setSelected(id);setExplode(.73);setAutoRotate(false);setResetKey(k=>k+1);
+    setSelected(id);setExplode(id==='sentinel'?.18:.73);setAutoRotate(false);setResetKey(k=>k+1);
     // Preserve a shareable deep link without letting the browser jump to an absent anchor.
     window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#${id}`);
     if(scroll){heroRef.current?.scrollIntoView({behavior:'smooth',block:'start'});}
@@ -112,7 +112,7 @@ function App(){
       const id=window.location.hash.slice(1);
       if(EXPERIMENTS.some(e=>e.id===id)){
         setSelected(id);
-        setExplode(.73);
+        setExplode(id==='sentinel'?.18:.73);
         setAutoRotate(false);
         setResetKey(k=>k+1);
       }
@@ -183,7 +183,7 @@ function App(){
           <div className="control-deck">
             <div className="control-title"><SlidersHorizontal size={16}/><span>INTERACTION PANEL</span><span className="control-code">CTRL_00{index+1}</span></div>
             <div className="control-body"><div className="range-control"><div className="range-top"><label htmlFor="motion-slider">{active.slider}</label><span>{Math.round(explode*100).toString().padStart(3,'0')} <span className="range-unit">/ 100</span></span></div><input id="motion-slider" type="range" min="0" max="100" value={Math.round(explode*100)} style={{'--range':`${explode*100}%`}} onChange={e=>setExplode(+e.target.value/100)}/><div className="range-ticks"><span>MIN</span><span>25</span><span>50</span><span>75</span><span>MAX</span></div></div>
-              <div className="control-actions"><button aria-pressed={autoRotate} onClick={()=>setAutoRotate(v=>!v)} title={autoRotate?'Pause rotation':'Auto rotate'}>{autoRotate?<Pause size={16}/>:<Play size={16}/>} <span>{autoRotate?'PAUSE':'AUTO ROTATE'}</span></button><button onClick={()=>{setExplode(.73);setAutoRotate(false);setResetKey(k=>k+1)}} title="Reset camera and controls"><RotateCcw size={16}/><span>RESET VIEW</span></button></div>
+              <div className="control-actions"><button aria-pressed={autoRotate} onClick={()=>setAutoRotate(v=>!v)} title={autoRotate?'Pause rotation':'Auto rotate'}>{autoRotate?<Pause size={16}/>:<Play size={16}/>} <span>{autoRotate?'PAUSE':'AUTO ROTATE'}</span></button><button onClick={()=>{setExplode(selected==='sentinel'?.18:.73);setAutoRotate(false);setResetKey(k=>k+1)}} title="Reset camera and controls"><RotateCcw size={16}/><span>RESET VIEW</span></button></div>
             </div>
           </div>
           <div className="visual-bottom-nav"><button onClick={()=>shift(-1)} aria-label="Previous experiment"><ChevronLeft size={17}/> PREV</button><div className="pagination">{EXPERIMENTS.map(e=><button key={e.id} onClick={()=>choose(e.id)} className={selected===e.id?'current':''} aria-label={`Show ${e.id}`}/>)}</div><button onClick={()=>shift(1)} aria-label="Next experiment">NEXT <ChevronRight size={17}/></button></div>

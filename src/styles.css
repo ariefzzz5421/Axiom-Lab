@@ -44,3 +44,15 @@
 .sentinel-active .number-box{color:#d8c2ff;border-color:#705392}
 @media(max-width:1050px){.sentinel-reference{top:60px;right:25px}.sentinel-reference span{display:none}}
 @media(max-width:740px){.sentinel-reference{right:22px;top:64px}.sentinel-reference img{width:48px;height:48px}.sentinel-active .story-main h1{font-size:clamp(55px,11vw,81px)}}
+
+/* Sentinel Orb Mk II — mobile-safe callouts and a full front-facing globe. */
+.sentinel-active .viewport canvas{touch-action:pan-y}
+.sentinel-active .visual-meta-sub{color:#bba9d7}
+.sentinel-active .sentinel-reference{top:38px;right:26px}
+@media(max-width:740px){
+ .sentinel-active .viewport{height:480px}
+ .sentinel-active .diagram-annotation{display:none}
+ .sentinel-active .sentinel-reference{top:18px;right:18px}
+ .sentinel-active .sentinel-reference img{width:44px;height:44px;opacity:.82}
+ .sentinel-active .axis-key{opacity:.45}
+}

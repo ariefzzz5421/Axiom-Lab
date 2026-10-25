@@ -144,7 +144,7 @@ function Stage({ experiment, exploded, autoRotate, resetKey }) {
   const controls=useRef();
   useEffect(()=>{controls.current?.reset();},[resetKey,experiment]);
   return <>
-    <OrthographicCamera makeDefault position={experiment==='sentinel'?[0.5,2.1,10]:[7,6.4,8]} zoom={experiment==='sentinel'?63:70} near={.1} far={100}/>
+    <OrthographicCamera makeDefault position={experiment==='sentinel'?[0,.4,10]:[7,6.4,8]} zoom={experiment==='sentinel'?76:70} near={.1} far={100}/>
     <ambientLight intensity={.8}/>
     <group scale={experiment==='assembly'?.93:1}>
       {experiment==='assembly' && <Assembly exploded={exploded}/>}
