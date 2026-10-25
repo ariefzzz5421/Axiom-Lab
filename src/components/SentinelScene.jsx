@@ -94,7 +94,7 @@ function Base(){return <group><Shield isTop={false}/>
 const anchors=[[-1.16,.76,.5],[1.16,.76,.5],[-1.22,-.84,.5],[1.22,-.84,.5]];
 const guides=[-1.08,0,1.08];
 
-export default function SentinelModel({ exploded=0.72, autoRotate=false }) {
+export default function SentinelModel({ exploded=0.72 }) {
   const root=useRef();
   const parts=useRef([]);
   const setPart=(index)=>(node)=>{parts.current[index]=node;};
@@ -104,7 +104,8 @@ export default function SentinelModel({ exploded=0.72, autoRotate=false }) {
     const rate=1-Math.exp(-delta*5.3);
     positions.forEach((p,i)=>{const node=parts.current[i];if(node) node.position.y=THREE.MathUtils.lerp(node.position.y,p+spread[i]*exploded,rate);});
     if(root.current){
-      root.current.rotation.y=THREE.MathUtils.lerp(root.current.rotation.y,autoRotate?root.current.rotation.y+delta*.24:-.10, autoRotate?.16:.035);
+      // OrbitControls already owns the auto-rotation; avoid spinning the model a second time.
+      root.current.rotation.y=THREE.MathUtils.damp(root.current.rotation.y,-.10,1.3,delta);
       root.current.position.y=Math.sin(state.clock.elapsedTime*1.05)*.035;
     }
   });
