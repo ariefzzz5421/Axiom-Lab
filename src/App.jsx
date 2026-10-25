@@ -97,6 +97,8 @@ function App(){
 
   function choose(id,scroll=false){
     setSelected(id);setExplode(.73);setAutoRotate(false);setResetKey(k=>k+1);
+    // Preserve a shareable deep link without letting the browser jump to an absent anchor.
+    window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#${id}`);
     if(scroll){heroRef.current?.scrollIntoView({behavior:'smooth',block:'start'});}
   }
   function shift(delta){choose(EXPERIMENTS[(index+delta+EXPERIMENTS.length)%EXPERIMENTS.length].id);}
@@ -105,9 +107,24 @@ function App(){
     try {await navigator.clipboard.writeText(txt);setCopied(true);window.setTimeout(()=>setCopied(false),1600);} catch {setCopied(false);}
   }
   useEffect(()=>{
+    // Allow opening a specific experiment using /#sentinel, /#orbit, etc.
+    const readHash=()=>{
+      const id=window.location.hash.slice(1);
+      if(EXPERIMENTS.some(e=>e.id===id)){
+        setSelected(id);
+        setExplode(.73);
+        setAutoRotate(false);
+        setResetKey(k=>k+1);
+      }
+    };
+    window.addEventListener('hashchange',readHash);
+    return ()=>window.removeEventListener('hashchange',readHash);
+  },[]);
+
+  useEffect(()=>{
     const handleKey=(e)=>{
       const tag=document.activeElement?.tagName;
-      if(tag==='INPUT'||tag==='TEXTAREA'||tag==='BUTTON')return;
+      if(tag==='INPUT'||tag==='TEXTAREA'||tag==='BUTTON'||document.activeElement?.isContentEditable||e.altKey||e.ctrlKey||e.metaKey)return;
       if(e.key==='ArrowRight')shift(1);
       if(e.key==='ArrowLeft')shift(-1);
     };
