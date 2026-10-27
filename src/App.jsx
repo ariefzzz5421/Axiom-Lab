@@ -87,7 +87,7 @@ function BlueprintIcon({type}){
 
 function App(){
   const [selected,setSelected]=useState(()=>typeof window!=='undefined' && ['assembly','orbit','signal','sentinel'].includes(window.location.hash.slice(1))?window.location.hash.slice(1):'sentinel');
-  const [explode,setExplode]=useState(selected==='sentinel'?.18:.73);
+  const [explode,setExplode]=useState(selected==='sentinel'?.20:.73);
   const [autoRotate,setAutoRotate]=useState(false);
   const [resetKey,setResetKey]=useState(0);
   const [copied,setCopied]=useState(false);
@@ -96,7 +96,7 @@ function App(){
   const index=EXPERIMENTS.findIndex(e=>e.id===selected);
 
   function choose(id,scroll=false){
-    setSelected(id);setExplode(id==='sentinel'?.18:.73);setAutoRotate(false);setResetKey(k=>k+1);
+    setSelected(id);setExplode(id==='sentinel'?.20:.73);setAutoRotate(false);setResetKey(k=>k+1);
     // Preserve a shareable deep link without letting the browser jump to an absent anchor.
     window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#${id}`);
     if(scroll){heroRef.current?.scrollIntoView({behavior:'smooth',block:'start'});}
@@ -112,7 +112,7 @@ function App(){
       const id=window.location.hash.slice(1);
       if(EXPERIMENTS.some(e=>e.id===id)){
         setSelected(id);
-        setExplode(id==='sentinel'?.18:.73);
+        setExplode(id==='sentinel'?.20:.73);
         setAutoRotate(false);
         setResetKey(k=>k+1);
       }
@@ -172,6 +172,7 @@ function App(){
           <div className="visual-grid" aria-hidden="true"/>
           <div className="visual-meta"><div><span className="tiny-label">{active.figure}</span><div className="visual-meta-sub">ORTHOGRAPHIC PROJECTION / LIVE GEOMETRY</div></div><div className="visual-meta-right"><ScanLine size={17}/><span>REAL-TIME RENDER</span></div></div>
           <div className="viewport">
+            {selected==='sentinel' && <div className="sentinel-poster-heading"><div><strong>SENTINEL BOT</strong><span>AXIOM LABS / REVERSE ENGINEERING PROTOCOL</span></div><div className="sentinel-poster-emblem"><img src="/sentinel-logo.png" alt="Sentinel original mark"/><small>IDENTITY REF / 01</small></div></div>}
             <TechnicalScene experiment={selected} exploded={explode} autoRotate={autoRotate} resetKey={resetKey}/>
             <div className="crosshair crosshair-tl" aria-hidden="true"/><div className="crosshair crosshair-br" aria-hidden="true"/>
             <div className="diagram-annotation annotation-one"><span className="annot-line"/><span>{selected==='sentinel'?'01 / CROWN CAP':selected==='assembly'?'10 / UPPER PLATE':selected==='orbit'?'01 / OUTER RING':'01 / SIGNAL NODE'}</span></div>
@@ -180,11 +181,22 @@ function App(){
             <div className="viewport-bottom-left"><Move3d size={16}/> {active.detail}</div>
             {selected==='sentinel' && <div className="sentinel-reference"><img src="/sentinel-logo.png" alt="Original Sentinel Bot logo"/><span>ORIGINAL MARK / REFERENCE</span></div>}
             <div className="viewport-bottom-right">X <span>+</span> Y <span>+</span> Z</div>
+            {selected==='sentinel' && <div className="sentinel-poster-details" aria-label="Sentinel design specification">
+              <div className="sentinel-note n1"><strong>01 / OUTER SHELL</strong><span>TITANIUM COMPOSITE<br/>CERAMIC ARMOR<br/>SEGMENTED PANELS</span></div>
+              <div className="sentinel-note n2"><strong>02 / ORBITAL RING</strong><span>GYRO ALIGNMENT<br/>EQUATORIAL STABILIZER<br/>360° ROTATION</span></div>
+              <div className="sentinel-note n3"><strong>03 / IRIS CORE</strong><span>VISION MODULE<br/>LUMINOUS EYE<br/>REAL-TIME SIGNALS</span></div>
+              <div className="sentinel-note n4"><strong>04 / GRAVITY NODES</strong><span>ORBITAL SENSORS<br/>DYNAMIC BALANCE<br/>SUSPENDED BASE</span></div>
+            </div>}
+            {selected==='sentinel' && <div className="sentinel-study-strip">
+              <div><svg viewBox="0 0 130 105" fill="none" aria-hidden="true"><circle cx="65" cy="49" r="38" stroke="#8b60cf"/><ellipse cx="65" cy="49" rx="57" ry="17" stroke="#c69aff" transform="rotate(-10 65 49)"/><path d="M37 49 Q65 22 93 49 Q65 74 37 49Z" stroke="#d5b8ff" strokeWidth="3"/><circle cx="65" cy="49" r="9" fill="#a46df3"/></svg><span>FRONT VIEW</span></div>
+              <div><svg viewBox="0 0 130 105" fill="none" aria-hidden="true"><ellipse cx="16" cy="49" rx="9" ry="31" stroke="#b78cff"/><ellipse cx="41" cy="49" rx="9" ry="24" stroke="#8f62d6"/><circle cx="66" cy="49" r="20" stroke="#b58cff"/><circle cx="66" cy="49" r="8" fill="#ae76fb"/><ellipse cx="101" cy="49" rx="9" ry="25" stroke="#b58cff"/><path d="M30 49H51M86 49H92" stroke="#7952ac" strokeDasharray="2 3"/></svg><span>EXPLODED ASSEMBLY</span></div>
+              <div><svg viewBox="0 0 130 105" fill="none" aria-hidden="true"><circle cx="65" cy="49" r="38" stroke="#8052c2"/><circle cx="65" cy="49" r="29" stroke="#a378e8"/><circle cx="65" cy="49" r="19" stroke="#7344be"/><circle cx="65" cy="49" r="7" fill="#d0b1ff"/></svg><span>TOP VIEW</span></div>
+            </div>}
           </div>
           <div className="control-deck">
             <div className="control-title"><SlidersHorizontal size={16}/><span>INTERACTION PANEL</span><span className="control-code">CTRL_00{index+1}</span></div>
             <div className="control-body"><div className="range-control"><div className="range-top"><label htmlFor="motion-slider">{active.slider}</label><span>{Math.round(explode*100).toString().padStart(3,'0')} <span className="range-unit">/ 100</span></span></div><input id="motion-slider" type="range" min="0" max="100" value={Math.round(explode*100)} style={{'--range':`${explode*100}%`}} onChange={e=>setExplode(+e.target.value/100)}/><div className="range-ticks"><span>MIN</span><span>25</span><span>50</span><span>75</span><span>MAX</span></div></div>
-              <div className="control-actions"><button aria-pressed={autoRotate} onClick={()=>setAutoRotate(v=>!v)} title={autoRotate?'Pause rotation':'Auto rotate'}>{autoRotate?<Pause size={16}/>:<Play size={16}/>} <span>{autoRotate?'PAUSE':'AUTO ROTATE'}</span></button><button onClick={()=>{setExplode(selected==='sentinel'?.18:.73);setAutoRotate(false);setResetKey(k=>k+1)}} title="Reset camera and controls"><RotateCcw size={16}/><span>RESET VIEW</span></button></div>
+              <div className="control-actions"><button aria-pressed={autoRotate} onClick={()=>setAutoRotate(v=>!v)} title={autoRotate?'Pause rotation':'Auto rotate'}>{autoRotate?<Pause size={16}/>:<Play size={16}/>} <span>{autoRotate?'PAUSE':'AUTO ROTATE'}</span></button><button onClick={()=>{setExplode(selected==='sentinel'?.20:.73);setAutoRotate(false);setResetKey(k=>k+1)}} title="Reset camera and controls"><RotateCcw size={16}/><span>RESET VIEW</span></button></div>
             </div>
           </div>
           <div className="visual-bottom-nav"><button onClick={()=>shift(-1)} aria-label="Previous experiment"><ChevronLeft size={17}/> PREV</button><div className="pagination">{EXPERIMENTS.map(e=><button key={e.id} onClick={()=>choose(e.id)} className={selected===e.id?'current':''} aria-label={`Show ${e.id}`}/>)}</div><button onClick={()=>shift(1)} aria-label="Next experiment">NEXT <ChevronRight size={17}/></button></div>
