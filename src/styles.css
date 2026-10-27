@@ -56,3 +56,11 @@
  .sentinel-active .sentinel-reference img{width:44px;height:44px;opacity:.82}
  .sentinel-active .axis-key{opacity:.45}
 }
+
+/* PFP Studio entry point, kept visible even where main-nav collapses on mobile. */
+.pfp-studio-trigger{border:1px solid #765a9f;background:#23172f;color:#d9c1ff;
+ font:10px var(--mono);letter-spacing:.04em;display:flex;align-items:center;gap:8px;
+ padding:11px 12px;white-space:nowrap;transition:background .2s}
+.pfp-studio-trigger:hover{background:#3b2655}
+@media(max-width:740px){.pfp-studio-trigger{padding:9px 10px;font-size:9px}
+ .header-right{gap:9px}}
