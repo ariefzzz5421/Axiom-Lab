@@ -138,9 +138,10 @@ function App(){
       <nav className="main-nav" aria-label="Primary navigation">
         <a href="#lab" className="nav-active">The laboratory <span>01</span></a><a href="#lab" onClick={()=>choose('sentinel')}>Sentinel Bot <span>NEW</span></a>
         <a href="#experiments">Experiments <span>04</span></a>
+        <a href="/pfp-studio">PFP 3D Studio <span>NEW</span></a>
         <a href="#about">Manifesto</a>
       </nav>
-      <div className="header-right"><span className="live-status"><i/>ALL SYSTEMS CURIOUS</span><a className="header-gh" href="https://github.com/ariefzzz5421/Axiom-Lab" target="_blank" rel="noreferrer" aria-label="View project on GitHub"><Github size={17}/><span>GITHUB</span><ArrowUpRight size={13}/></a></div>
+      <div className="header-right"><a href="/pfp-studio" className="pfp-studio-trigger">PFP STUDIO <ArrowUpRight size={13}/></a><span className="live-status"><i/>ALL SYSTEMS CURIOUS</span><a className="header-gh" href="https://github.com/ariefzzz5421/Axiom-Lab" target="_blank" rel="noreferrer" aria-label="View project on GitHub"><Github size={17}/><span>GITHUB</span><ArrowUpRight size={13}/></a></div>
     </header>
 
     <main id="top">

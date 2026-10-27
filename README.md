@@ -56,3 +56,9 @@ The initial view opens Sentinel Bot by default. The interactive scene is created
 ## Sentinel Orb Mk II
 
 The Sentinel experiment now uses a genuinely spherical procedural 3D core, curved metallic armor, orbital gyroscope rings, an illuminated forward-facing iris and six articulated exploded-view groups. The default state is largely assembled so the shape reads as a globe on mobile. No Blender assets or heavy model files are required.
+
+## PFP 3D Studio
+
+Open `/pfp-studio` to upload a PFP illustration or photo, experiment with an **instant local WebGL relief**, switch resin/chrome/holographic material finishes, and rotate/explode the generated study. This is a client-side geometric approximation, **not an AI image-to-3D conversion**.
+
+An opt-in, protected Vercel adapter is prepared under `api/pfp-convert.js` and `api/pfp-job.js` for a future image-to-3D provider. It stays disabled without environment variables. Details: [PFP_STUDIO_SETUP.md](PFP_STUDIO_SETUP.md).

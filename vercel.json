@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/pfp-studio", "destination": "/index.html" },
+    { "source": "/pfp-studio/", "destination": "/index.html" }
+  ]
+}
